@@ -2,7 +2,7 @@
 #
 # Install script for the Dyanmic Remote IP Address Service
 #
-# February 2023  - Adam Moreira & Michele Giugliano
+# February/March 2023  - Adam Moreira & Michele Giugliano
 
 
 rm -f ./dyndns.sh > /dev/null 2>&1
@@ -116,7 +116,13 @@ echo "#!/usr/bin/env bash"                                      > getip_$HOST.sh
 echo "#"                                                       >> getip_$HOST.sh
 echo "# This is to get the IP of $HOST"                        >> getip_$HOST.sh
 echo ""                                                        >> getip_$HOST.sh
-echo "echo \$($CMD $ENDPOINT$SHARED_KEY.txt)"                  >> getip_$HOST.sh
+echo "if command -v wget &> /dev/null"                         >> getip_$HOST.sh
+echo "then"                                                    >> getip_$HOST.sh
+echo "    CMD=\"wget -q -O -\" "                               >> getip_$HOST.sh
+echo "else"                                                    >> getip_$HOST.sh
+echo "    CMD=\"curl -s \" "                                   >> getip_$HOST.sh
+echo "fi"                                                      >> getip_$HOST.sh
+echo "echo \$(\$CMD $ENDPOINT$SHARED_KEY.txt)"                 >> getip_$HOST.sh
 echo ""                                                        >> getip_$HOST.sh
 
 echo "Done!"
@@ -136,8 +142,8 @@ echo "3) Move and use getip_$HOST.sh to any other PC to recover the IP address o
 echo "e.g. alias $HOST='source getip_$HOST.sh'"
 echo "e.g. alias $HOST=$(source getip_$HOST.sh); ssh user@$HOST"
 echo ""
-echo "4) Add a cron job to run dyndns.sh every hour."
-echo "e.g. sudo (crontab -l ; echo \"0 * * * * ~/dyndns.sh\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -"
+echo "4) Add a cron job to run dyndns.sh every hour (i.e. sudo crontab -e)"
+echo "e.g.:    0 * * * * /root/dyndns.sh"
 
 # We finally add a cron job to update IP every hour
 echo "Adding cron job to update IP every hour..."
