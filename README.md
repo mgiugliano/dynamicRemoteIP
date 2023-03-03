@@ -62,11 +62,11 @@ It creates 3 (custom) 3 files:
 - the `sha256sum` command
 - 
 
-It also assumes that your public IP address can be obtained by invoking `hostname -I` from bash. If not, you have to dig into the
+It also assumes that your public IP address can be obtained by invoking `hostname -I` from bash. If not, you have to dig into the code and uncomment the alternative methods to get the ip (e.g. ifconfig, grep, bash-fu, etc.).
 
 ## Acknowledgements
 
- - Davide (for guidance and inspiration)
+ - @davide-italy (for guidance and inspiration)
  - [Readme.so](https://readme.so)
 
 
